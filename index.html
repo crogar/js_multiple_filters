@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>UFO Finder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">UFO Sightings
+            <img class="nav-ufo" src="static/images/ufo.svg">
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div style="background-color: black;">
+      <div class="box-canvas">
+        <div class="beam"></div>
+        <div class="ship">
+          <div class="ship-inner">
+            <div class="alien-head">
+            <div class="antennae"></div>
+            <div class="mouth"></div>
+          </div>
+          </div>
+        </div>
+        <div class="bubble"></div>
+      </div>
+    </div>
+    <div class="hero text-center">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
+      <h1>UFO Sightings</h1>
+      <p>The Truth is Out There</p>
+    </div>
+    <div class="container">
+      <div class="row margin-top-50">
+        <div class="col-md-2">
+          <aside class="filters">
+            <div class="panel panel-default">
+              <div class="panel-heading">Filter Search</div>
+              <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <ul class="list-group" id="filters">
+                      <li class="filter list-group-item">
+                        <!-- Creating filter by date dropdown menu -->
+                        <label for="datetime">Select a Date</label>
+                        <select name="date" id="datetime">
+                          <option value="">Any</option>
+                        </select>
+                        <!-- Creating filter by city dropdown menu -->
+                        <label for="city">City</label>
+                        <select name="city" id="city">
+                          <option value="">Any</option>
+                        </select>
+                        <!-- Creating filter by State dropdown menu -->
+                        <label for="state">State</label>
+                        <select name="state" id="state">
+                          <option value="">Any</option>
+                        </select>
+                        <!-- Creating filter by country dropdown menu -->
+                        <label for="country">Country</label>
+                        <select name="country" id="country">
+                          <option value="">Any</option>
+                        </select>
+                        <!-- Creating filter by country dropdown menu -->
+                        <label for="shape">Shape</label>
+                        <select name="shape" id="shape">
+                          <option value="">Any</option>
+                        </select>
+                        <!-- creating a reset filter button- -->
+                        <center><input type="button" value="Reset Filters" id="reset" style="margin: auto;"></center>
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <div class="col-md-10">
+          <div id="table-area" class="">
+            <table id="ufo-table" class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="table-head">Date</th>
+                  <th class="table-head">City</th>
+                  <th class="table-head">State</th>
+                  <th class="table-head">Country</th>
+                  <th class="table-head">Shape</th>
+                  <th class="table-head">Duration</th>
+                  <th class="table-head">Comments</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <span class="bottom">UFO Sightings</span>
+    </footer>
+  </div>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="static/js/data.js"></script>
+  <script src="static/js/app.js"></script>
+  <style>
+/* https://codepen.io/aitchiss/pen/VwervVm */
+/* CSS Spaceship Animation */
+.box-canvas{
+  position: relative;
+  margin: auto;
+  display: block;
+  z-index: 900;
+  margin-top: 0%;
+  margin-bottom: 0%;
+  width: 300px;
+  height:300px;
+  animation: flyShip 5s infinite;
+}
+
+@keyframes flyShip {
+  0% {
+    transform: translate(0,0) rotate(0);
+  }
+  
+  33% {
+    transform: translate(50px, 50px);
+  }
+  
+  66% {
+    transform: translate(0, 50px);
+  }
+  
+  100% {
+    transform: translate(0,0) rotate(0);
+  }
+}
+
+.ship {
+  position: absolute;
+  top: 150px;
+  width: 300px;
+  height: 120px;
+  background: #AFCECD;
+  border-radius: 50%;
+}
+
+/* Left dot */
+.ship::before {
+  content: '';
+  left: 25px;
+  bottom: 40px;
+  position: absolute;
+  width: 20px;
+  height: 15px;
+  background: yellow;
+  border-radius: 50%;
+  border-bottom: 2px solid black;
+}
+
+/* Right dot */
+.ship::after {
+  content: '';
+  right: 25px;
+  bottom: 40px;
+  position: absolute;
+  width: 20px;
+  height: 15px;
+  background: yellow;
+  border-radius: 50%;
+  border-bottom: 2px solid black;
+}
+
+.ship-inner {
+  position: absolute;
+  top: 20px;
+  background: black;
+  left: 50%;
+  transform: translate(-50%);
+  width: 190px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+/* Bottom dot */
+.ship-inner::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 15px;
+  background: yellow;
+  border-radius: 50%;
+  border-bottom: 2px solid black;
+  bottom: -30px;
+}
+
+.alien-head {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 50px;
+  background: lightgreen;
+  border-radius: 40% 40% 50% 50%;
+}
+
+/* Left eye */
+.alien-head::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  width: 10px;
+  height: 20px;
+  background: black;
+  border-radius: 50%;
+  transform: rotate(-15deg);
+}
+
+/* Right eye */
+.alien-head::after {
+  content: '';
+  position: absolute;
+  right: 6px;
+  top: 10px;
+  width: 10px;
+  height: 20px;
+  background: black;
+  border-radius: 50%;
+  transform: rotate(15deg);
+}
+
+.antennae {
+  position: absolute;
+  top: -5px;
+  width: 40px;
+  height: 15px;
+}
+
+/* Left */
+.antennae::before {
+  content: '';
+  position: absolute;
+  height: 15px;
+  width: 5px;
+  background: lightgreen;
+  transform: rotate(-45deg);
+  border-radius: 50% 50% 0 0;
+}
+
+/* Right */
+.antennae::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  height: 15px;
+  width: 5px;
+  background: lightgreen;
+  transform: rotate(45deg);
+  border-radius: 50% 50% 0 0;
+}
+
+.mouth {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 5px;
+}
+
+.bubble {
+  position: absolute;
+  top: 97px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255, 0.3);
+  height: 130px;
+  width: 200px;
+  border-radius: 50% 50% 50% 50% / 50% 50% 30% 30%;
+  border-bottom: 8px solid black;
+}
+
+.beam {
+  position: absolute;
+  top: 200px;
+  height: 500px;
+  width: 300px;
+  clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+}
+
+.beam::before {
+  content: '';
+  position: absolute;
+  height: 500px;
+  width: 300px;
+  background: linear-gradient(to bottom,
+    rgba(255, 252, 2, 1),
+    rgba(255, 252, 2, 0.1)
+  );
+  animation: beamIn 5s infinite;
+}
+
+@keyframes beamIn {
+  0% {
+    transform: translateY(-500px);
+  }
+  
+  50% {
+     transform: translateY(0);
+  }
+  
+  100% {
+    transform: translateY(-500px);
+  }
+}
+  </style>
+</body>
+
+</html>
